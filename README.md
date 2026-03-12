@@ -3,7 +3,7 @@
 
 <p align="center">
   <a href="https://thibaultfayol.com">thibaultfayol.com</a> Â·
-  <a href="https://twitter.com/ThibFay">@ThibFay</a>
+  <a href="https://x.com/FayolConsulting">@FayolConsulting</a>
 </p>
 
 ---
