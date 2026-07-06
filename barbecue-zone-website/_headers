@@ -1,0 +1,11 @@
+# En-têtes de sécurité — format Netlify / Cloudflare Pages.
+# Équivalent Apache : voir .htaccess. À adapter selon l'hébergeur.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  # CSP : autorise le site lui-même + Google (GTM/GA4/Ads, chargés après consentement).
+  # Si vous n'utilisez ni GTM ni GA4, supprimez les hôtes google* pour durcir.
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://www.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https:
