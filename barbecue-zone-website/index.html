@@ -16,18 +16,22 @@
   <meta property="og:title" content="Barbecue Zone — Le spécialiste du barbecue et de la plancha" />
   <meta property="og:description" content="Barbecues au charbon, au gaz, électriques, planchas, fumoirs et accessoires. Grandes marques, conseils d'experts et livraison rapide en France." />
   <meta property="og:url" content="https://www.barbecuezone.fr/" />
+  <meta property="og:image" content="https://www.barbecuezone.fr/assets/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:locale" content="fr_FR" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Barbecue Zone — Le spécialiste du barbecue et de la plancha" />
   <meta name="twitter:description" content="Barbecues, planchas, fumoirs et accessoires. Grandes marques, conseils d'experts, livraison rapide." />
+  <meta name="twitter:image" content="https://www.barbecuezone.fr/assets/og-image.jpg" />
 
   <meta name="theme-color" content="#1a1614" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%94%A5%3C/text%3E%3C/svg%3E" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Polices : auto-hébergées (RGPD, pas d'appel à Google Fonts).
+       Déposez les .woff2 dans assets/fonts/ puis décommentez les @font-face
+       dans assets/css/styles.css — voir assets/fonts/README.md. -->
   <link rel="stylesheet" href="assets/css/styles.css" />
 
   <!-- Structured data: local store -->
@@ -62,14 +66,11 @@
         "opens": "09:00",
         "closes": "18:00"
       }
-    ],
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "reviewCount": "2143"
-    }
+    ]
   }
   </script>
+  <!-- NOTE : ne réintroduire un "aggregateRating" dans ce JSON-LD que lorsque
+       de vrais avis collectés (plateforme d'avis vérifiés) l'étayeront. -->
 </head>
 <body>
   <a class="skip-link" href="#main">Aller au contenu principal</a>
@@ -180,37 +181,37 @@
         </header>
 
         <div class="cat-grid">
-          <a class="cat-card" href="#contact" style="--c1:#e8613a;--c2:#b5321a">
+          <a class="cat-card" href="barbecue-charbon.html" style="--c1:#e8613a;--c2:#b5321a">
             <div class="cat-card__icon">🍖</div>
             <h3>Barbecues au charbon</h3>
             <p>Le vrai goût fumé, la braise et la convivialité.</p>
             <span class="cat-card__link">Voir la sélection →</span>
           </a>
-          <a class="cat-card" href="#contact" style="--c1:#3a8ee8;--c2:#1a55b5">
+          <a class="cat-card" href="barbecue-gaz.html" style="--c1:#3a8ee8;--c2:#1a55b5">
             <div class="cat-card__icon">🔵</div>
             <h3>Barbecues au gaz</h3>
             <p>Allumage immédiat et maîtrise parfaite de la chaleur.</p>
             <span class="cat-card__link">Voir la sélection →</span>
           </a>
-          <a class="cat-card" href="#contact" style="--c1:#e8b13a;--c2:#b5851a">
+          <a class="cat-card" href="barbecue-electrique.html" style="--c1:#e8b13a;--c2:#b5851a">
             <div class="cat-card__icon">⚡</div>
             <h3>Barbecues électriques</h3>
             <p>Idéal balcon et terrasse, sans fumée ni gaz.</p>
             <span class="cat-card__link">Voir la sélection →</span>
           </a>
-          <a class="cat-card" href="#contact" style="--c1:#e83a6f;--c2:#b51a45">
+          <a class="cat-card" href="planchas.html" style="--c1:#e83a6f;--c2:#b51a45">
             <div class="cat-card__icon">🍳</div>
             <h3>Planchas</h3>
             <p>Légumes, poissons, viandes saisies à la perfection.</p>
             <span class="cat-card__link">Voir la sélection →</span>
           </a>
-          <a class="cat-card" href="#contact" style="--c1:#7a5a3a;--c2:#4a3520">
+          <a class="cat-card" href="fumoirs.html" style="--c1:#7a5a3a;--c2:#4a3520">
             <div class="cat-card__icon">💨</div>
             <h3>Fumoirs & smokers</h3>
             <p>Cuisson lente, low & slow, pour les puristes.</p>
             <span class="cat-card__link">Voir la sélection →</span>
           </a>
-          <a class="cat-card" href="#contact" style="--c1:#4ab56a;--c2:#2a7a45">
+          <a class="cat-card" href="accessoires.html" style="--c1:#4ab56a;--c2:#2a7a45">
             <div class="cat-card__icon">🧰</div>
             <h3>Accessoires & housses</h3>
             <p>Ustensiles, thermomètres, briquettes, protections.</p>
@@ -383,6 +384,7 @@
         <form class="newsletter" id="newsletter" novalidate>
           <label class="sr-only" for="nlEmail">Votre adresse email</label>
           <input type="email" id="nlEmail" name="email" placeholder="votre@email.fr" required />
+          <p class="hp-field" aria-hidden="true"><label>Ne pas remplir <input type="text" name="bz_hp" tabindex="-1" autocomplete="off" /></label></p>
           <button type="submit" class="btn btn--primary">Je m'inscris</button>
           <p class="newsletter__msg" id="nlMsg" role="status" aria-live="polite"></p>
         </form>
@@ -426,8 +428,19 @@
             <label for="cMessage">Votre message</label>
             <textarea id="cMessage" name="message" rows="4" required></textarea>
           </div>
+          <p class="hp-field" aria-hidden="true"><label>Ne pas remplir <input type="text" name="bz_hp" tabindex="-1" autocomplete="off" /></label></p>
+          <div class="field--consent">
+            <input type="checkbox" id="cRgpd" name="rgpd" required />
+            <label for="cRgpd">J'accepte que mes données soient utilisées pour traiter ma demande et y répondre.
+              Elles ne sont jamais transmises à des tiers. <a href="confidentialite.html">Politique de confidentialité</a>.</label>
+          </div>
           <button type="submit" class="btn btn--primary btn--lg">Envoyer ma demande</button>
           <p class="form__msg" id="contactMsg" role="status" aria-live="polite"></p>
+          <ul class="assurance" aria-label="Garanties">
+            <li>🔒 Données protégées</li>
+            <li>⏱ Réponse sous 24h ouvrées</li>
+            <li>📞 Ou par téléphone : <a href="tel:+33400000000">04 00 00 00 00</a></li>
+          </ul>
         </form>
       </div>
     </section>
@@ -446,11 +459,12 @@
       <nav class="footer__col" aria-label="Nos univers">
         <h3>Nos univers</h3>
         <ul>
-          <li><a href="#categories">Barbecues au charbon</a></li>
-          <li><a href="#categories">Barbecues au gaz</a></li>
-          <li><a href="#categories">Barbecues électriques</a></li>
-          <li><a href="#categories">Planchas</a></li>
-          <li><a href="#categories">Fumoirs &amp; smokers</a></li>
+          <li><a href="barbecue-charbon.html">Barbecues au charbon</a></li>
+          <li><a href="barbecue-gaz.html">Barbecues au gaz</a></li>
+          <li><a href="barbecue-electrique.html">Barbecues électriques</a></li>
+          <li><a href="planchas.html">Planchas</a></li>
+          <li><a href="fumoirs.html">Fumoirs &amp; smokers</a></li>
+          <li><a href="accessoires.html">Accessoires &amp; housses</a></li>
         </ul>
       </nav>
       <nav class="footer__col" aria-label="Aide">
@@ -475,13 +489,22 @@
     <div class="wrap footer__bottom">
       <p>© <span id="year">2026</span> Barbecue Zone. Tous droits réservés.</p>
       <ul>
-        <li><a href="#">Mentions légales</a></li>
-        <li><a href="#">CGV</a></li>
-        <li><a href="#">Confidentialité</a></li>
+        <li><a href="mentions-legales.html">Mentions légales</a></li>
+        <li><a href="cgv.html">CGV</a></li>
+        <li><a href="confidentialite.html">Confidentialité</a></li>
+        <li><a href="#" data-open-consent>Gérer les cookies</a></li>
       </ul>
     </div>
   </footer>
 
+  <!-- Barre CTA persistante (mobile uniquement) -->
+  <nav class="mobile-cta" aria-label="Actions rapides">
+    <a class="mobile-cta__call" href="tel:+33400000000">📞 Appeler</a>
+    <a class="mobile-cta__shop" href="#categories">🔥 Voir les barbecues</a>
+  </nav>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/consent.js"></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

@@ -3,6 +3,31 @@
    Palette braise/charbon, mobile-first, sans dépendance.
    ========================================================= */
 
+/* Polices auto-hébergées (RGPD) — déposez les .woff2 dans assets/fonts/
+   (voir assets/fonts/README.md) puis décommentez ce bloc :
+
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("../fonts/barlow-condensed-v13-latin-700.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("../fonts/barlow-condensed-v13-latin-800.woff2") format("woff2");
+  font-weight: 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/inter-v20-latin-regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/inter-v20-latin-600.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+*/
+
 :root {
   --ember:   #e8613a;
   --ember-d: #b5321a;
@@ -314,7 +339,7 @@ p  { margin: 0 0 1rem; }
 .brands { padding-block: 34px; border-block: 1px solid var(--line); background: #fff; }
 .brands__title { text-align: center; text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; font-weight: 700; color: var(--muted); margin: 0 0 16px; }
 .brands__list { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 34px; list-style: none; margin: 0; padding: 0; }
-.brands__list li { font-family: var(--disp); font-weight: 700; font-size: 1.35rem; color: #9c918a; transition: color .2s ease; }
+.brands__list li { font-family: var(--disp); font-weight: 700; font-size: 1.35rem; color: #6b625c; transition: color .2s ease; }
 .brands__list li:hover { color: var(--charcoal); }
 
 /* ---------- Reviews ---------- */
@@ -384,3 +409,102 @@ p  { margin: 0 0 1rem; }
 /* ---------- Reveal on scroll ---------- */
 .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.is-visible { opacity: 1; transform: none; }
+
+/* ---------- Focus clavier visible (liens) ---------- */
+.primary-nav a:focus-visible,
+.footer__col a:focus-visible,
+.footer__bottom a:focus-visible,
+.cat-card:focus-visible,
+.breadcrumb a:focus-visible {
+  outline: 3px solid var(--flame); outline-offset: 2px; border-radius: 4px;
+}
+
+/* ---------- Bandeau de consentement (CMP) ---------- */
+.consent {
+  position: fixed; inset: auto 0 0 0; z-index: 300;
+  padding: 14px; pointer-events: none;
+}
+.consent__box {
+  pointer-events: auto;
+  max-width: 680px; margin-inline: auto;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow-lg); padding: 20px 22px;
+}
+.consent__title { font-family: var(--disp); font-weight: 800; font-size: 1.2rem; margin: 0 0 6px; color: var(--charcoal); }
+.consent__text { font-size: .92rem; color: var(--muted); margin: 0 0 12px; }
+.consent__text a { color: var(--ember-d); text-decoration: underline; }
+.consent__panel { display: grid; gap: 8px; margin-bottom: 14px; }
+.consent__opt { display: flex; gap: 10px; align-items: flex-start; font-size: .9rem; color: var(--ink); cursor: pointer; }
+.consent__opt input { margin-top: 3px; accent-color: var(--ember); }
+.consent__actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.consent__link {
+  background: none; border: 0; cursor: pointer; font: inherit; font-size: .88rem;
+  color: var(--muted); text-decoration: underline; padding: 6px 4px;
+}
+.consent__link:hover { color: var(--ember-d); }
+
+/* ---------- Barre CTA mobile persistante ---------- */
+.mobile-cta {
+  position: fixed; inset: auto 0 0 0; z-index: 90;
+  display: none; gap: 1px; background: var(--line);
+  box-shadow: 0 -6px 20px rgba(26,22,20,.15);
+}
+.mobile-cta a {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 10px; font-weight: 700; font-size: .95rem;
+}
+.mobile-cta__call { background: var(--charcoal); color: #fff; }
+.mobile-cta__shop { background: linear-gradient(135deg, var(--ember), var(--ember-d)); color: #fff; }
+@media (max-width: 767px) {
+  .mobile-cta { display: flex; }
+  body { padding-bottom: 52px; }        /* la barre ne masque pas le footer */
+  .consent { bottom: 52px; }            /* le bandeau cookies au-dessus de la barre */
+}
+
+/* ---------- Réassurance au point de conversion ---------- */
+.assurance { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 14px 0 0; padding: 0; list-style: none; font-size: .85rem; color: var(--muted); }
+.assurance li { display: flex; align-items: center; gap: 6px; }
+.field--consent { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 16px; }
+.field--consent input { margin-top: 4px; accent-color: var(--ember); }
+.field--consent label { font-weight: 400; font-size: .84rem; color: var(--muted); margin: 0; }
+.field--consent a { text-decoration: underline; }
+.hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- Pages internes (catégories, légal, 404) ---------- */
+.page-hero {
+  background: radial-gradient(120% 120% at 70% 0%, #2b2320 0%, var(--charcoal) 60%);
+  color: #f4ede6; padding-block: clamp(36px, 6vw, 64px);
+}
+.page-hero h1 { color: #fff; margin-bottom: .3em; }
+.page-hero .eyebrow { color: var(--flame); }
+.page-hero__lead { color: #d8cec5; max-width: 62ch; font-size: 1.08rem; margin: 0; }
+
+.breadcrumb { padding-block: 14px 0; font-size: .85rem; color: #b6aca2; }
+.breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; }
+.breadcrumb li + li::before { content: "›"; margin-right: 6px; color: #7a7069; }
+.breadcrumb a { color: #d8cec5; }
+.breadcrumb a:hover { color: var(--flame); }
+.breadcrumb [aria-current] { color: var(--flame); }
+
+.prose { max-width: 760px; }
+.prose h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-top: 1.6em; }
+.prose h3 { margin-top: 1.2em; }
+.prose p, .prose li { color: var(--ink); }
+.prose table { border-collapse: collapse; width: 100%; font-size: .95rem; }
+.prose th, .prose td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; }
+.prose th { background: var(--cream); }
+
+.legal-notice {
+  background: #fff7ed; border: 1px solid #f0ce9a; border-radius: var(--radius-sm);
+  padding: 14px 18px; font-size: .9rem; color: #7a5a1a; margin-bottom: 28px;
+}
+
+.cta-inline {
+  background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 26px 28px; margin-top: 40px;
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;
+}
+.cta-inline p { margin: 0; font-weight: 600; }
+
+.error-page { text-align: center; padding-block: clamp(60px, 12vw, 140px); }
+.error-page .brand__flame { font-size: 4rem; display: block; margin-bottom: 10px; }

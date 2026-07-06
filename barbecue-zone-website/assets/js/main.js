@@ -1,10 +1,21 @@
 /* =========================================================
    Barbecue Zone — interactions front-end
-   Menu mobile, révélation au scroll, formulaires, panier démo.
+   Menu mobile, révélation au scroll, formulaires (endpoint
+   configurable + honeypot), événements de conversion dataLayer.
    Aucune dépendance externe.
    ========================================================= */
 (function () {
   "use strict";
+
+  var cfg = window.BZ_CONFIG || {};
+
+  /* ----- Événements de mesure (relayés à GTM/GA4 via dataLayer) ----- */
+  function track(event, params) {
+    window.dataLayer = window.dataLayer || [];
+    var payload = { event: event };
+    for (var k in (params || {})) payload[k] = params[k];
+    window.dataLayer.push(payload);
+  }
 
   /* ----- Année dynamique dans le footer ----- */
   var yearEl = document.getElementById("year");
@@ -60,11 +71,19 @@
     revealTargets.forEach(function (el) { el.classList.add("is-visible"); });
   }
 
-  /* ----- Panier démonstration ----- */
-  var cartCount = 0;
+  /* ----- Suivi des appels (conversion click-to-call) ----- */
+  document.querySelectorAll('a[href^="tel:"]').forEach(function (a) {
+    a.addEventListener("click", function () {
+      track("phone_call", { phone_number: a.getAttribute("href").replace("tel:", "") });
+    });
+  });
+
+  /* ----- Panier démonstration + événement add_to_cart ----- */
   document.querySelectorAll(".add-to-cart").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      cartCount += 1;
+      var card = btn.closest(".prod-card");
+      var name = card ? (card.querySelector("h3") || {}).textContent : "";
+      track("add_to_cart", { item_name: name || "produit" });
       var original = btn.textContent;
       btn.textContent = "✓ Ajouté";
       btn.disabled = true;
@@ -75,9 +94,31 @@
     });
   });
 
-  /* ----- Utilitaire de validation email ----- */
+  /* ----- Utilitaires formulaires ----- */
   function isValidEmail(value) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+  }
+
+  // Anti-spam : champ invisible pour les humains. S'il est rempli,
+  // on simule un succès sans rien envoyer.
+  function isBot(form) {
+    var trap = form.querySelector('input[name="bz_hp"]');
+    return !!(trap && trap.value);
+  }
+
+  function submitTo(endpoint, form) {
+    return fetch(endpoint, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { Accept: "application/json" }
+    }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+    });
+  }
+
+  function setMsg(node, text, ok, baseClass) {
+    node.textContent = text;
+    node.className = baseClass + (ok ? " ok" : " err");
   }
 
   /* ----- Newsletter ----- */
@@ -88,14 +129,24 @@
       var input = document.getElementById("nlEmail");
       var msg = document.getElementById("nlMsg");
       if (!isValidEmail(input.value)) {
-        msg.textContent = "Merci d'entrer une adresse email valide.";
-        msg.className = "newsletter__msg err";
+        setMsg(msg, "Merci d'entrer une adresse email valide.", false, "newsletter__msg");
         input.focus();
         return;
       }
-      msg.textContent = "🔥 Inscription confirmée, à très vite pour nos bons plans grillades !";
-      msg.className = "newsletter__msg ok";
-      nlForm.reset();
+      var done = function () {
+        track("newsletter_signup", {});
+        setMsg(msg, "🔥 Inscription confirmée, à très vite pour nos bons plans grillades !", true, "newsletter__msg");
+        nlForm.reset();
+      };
+      if (isBot(nlForm)) { done(); return; }
+      if (cfg.NEWSLETTER_ENDPOINT) {
+        setMsg(msg, "Inscription en cours…", true, "newsletter__msg");
+        submitTo(cfg.NEWSLETTER_ENDPOINT, nlForm).then(done).catch(function () {
+          setMsg(msg, "Oups, une erreur est survenue. Merci de réessayer.", false, "newsletter__msg");
+        });
+      } else {
+        done(); // mode démo : aucun envoi
+      }
     });
   }
 
@@ -108,6 +159,7 @@
       var name = document.getElementById("cName");
       var email = document.getElementById("cEmail");
       var message = document.getElementById("cMessage");
+      var rgpd = document.getElementById("cRgpd");
       var problems = [];
 
       [name, email, message].forEach(function (f) { f.classList.remove("invalid"); });
@@ -118,15 +170,38 @@
 
       if (problems.length) {
         problems.forEach(function (f) { f.classList.add("invalid"); });
-        msg.textContent = "Merci de compléter les champs surlignés.";
-        msg.className = "form__msg err";
+        setMsg(msg, "Merci de compléter les champs surlignés.", false, "form__msg");
         problems[0].focus();
         return;
       }
+      if (rgpd && !rgpd.checked) {
+        setMsg(msg, "Merci d'accepter le traitement de vos données pour pouvoir vous répondre.", false, "form__msg");
+        rgpd.focus();
+        return;
+      }
 
-      msg.textContent = "Message envoyé ! Notre équipe vous répond sous 24h ouvrées.";
-      msg.className = "form__msg ok";
-      contactForm.reset();
+      var done = function () {
+        track("generate_lead", { form: "contact", subject: (document.getElementById("cSubject") || {}).value || "" });
+        setMsg(msg, "Message envoyé ! Notre équipe vous répond sous 24h ouvrées.", true, "form__msg");
+        contactForm.reset();
+      };
+      if (isBot(contactForm)) { done(); return; }
+      if (cfg.FORM_ENDPOINT) {
+        setMsg(msg, "Envoi en cours…", true, "form__msg");
+        submitTo(cfg.FORM_ENDPOINT, contactForm).then(done).catch(function () {
+          setMsg(msg, "Oups, l'envoi a échoué. Réessayez ou appelez-nous au " + (cfg.PHONE_DISPLAY || ""), false, "form__msg");
+        });
+      } else {
+        done(); // mode démo : aucun envoi
+      }
     });
   }
+
+  /* ----- Liens "Gérer les cookies" ----- */
+  document.querySelectorAll("[data-open-consent]").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      if (window.BZ_openConsent) window.BZ_openConsent();
+    });
+  });
 })();
