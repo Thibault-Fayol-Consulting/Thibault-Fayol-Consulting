@@ -7,39 +7,21 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.barbecuezone.fr/barbecue-charbon.html</loc>
+    <loc>https://www.barbecuezone.fr/pod-compact.html</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.barbecuezone.fr/barbecue-gaz.html</loc>
+    <loc>https://www.barbecuezone.fr/pod-riviera.html</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.barbecuezone.fr/barbecue-electrique.html</loc>
+    <loc>https://www.barbecuezone.fr/pod-signature.html</loc>
     <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.barbecuezone.fr/planchas.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.barbecuezone.fr/fumoirs.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.barbecuezone.fr/accessoires.html</loc>
-    <lastmod>2026-07-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
 </urlset>

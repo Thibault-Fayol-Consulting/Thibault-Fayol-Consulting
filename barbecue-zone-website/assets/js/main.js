@@ -150,23 +150,23 @@
     });
   }
 
-  /* ----- Formulaire de contact ----- */
+  /* ----- Formulaire d'étude gratuite (lead-gen) ----- */
   var contactForm = document.getElementById("contactForm");
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
       e.preventDefault();
       var msg = document.getElementById("contactMsg");
       var name = document.getElementById("cName");
+      var phone = document.getElementById("cPhone");
       var email = document.getElementById("cEmail");
-      var message = document.getElementById("cMessage");
       var rgpd = document.getElementById("cRgpd");
       var problems = [];
 
-      [name, email, message].forEach(function (f) { f.classList.remove("invalid"); });
+      [name, phone, email].forEach(function (f) { if (f) f.classList.remove("invalid"); });
 
       if (!name.value.trim()) { problems.push(name); }
+      if (phone && phone.value.replace(/\D/g, "").length < 9) { problems.push(phone); }
       if (!isValidEmail(email.value)) { problems.push(email); }
-      if (!message.value.trim()) { problems.push(message); }
 
       if (problems.length) {
         problems.forEach(function (f) { f.classList.add("invalid"); });
@@ -181,8 +181,12 @@
       }
 
       var done = function () {
-        track("generate_lead", { form: "contact", subject: (document.getElementById("cSubject") || {}).value || "" });
-        setMsg(msg, "Message envoyé ! Notre équipe vous répond sous 24h ouvrées.", true, "form__msg");
+        track("generate_lead", {
+          form: "etude",
+          model: (document.getElementById("cSubject") || {}).value || "",
+          zip: ((document.getElementById("cZip") || {}).value || "").slice(0, 2)
+        });
+        setMsg(msg, "Demande envoyée ! Un concepteur vous rappelle sous 24h ouvrées.", true, "form__msg");
         contactForm.reset();
       };
       if (isBot(contactForm)) { done(); return; }
@@ -196,6 +200,19 @@
       }
     });
   }
+
+  /* ----- Pré-sélection du modèle depuis les cartes Pod ----- */
+  document.querySelectorAll("[data-pod]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      var select = document.getElementById("cSubject");
+      if (!select) return;
+      var wanted = a.getAttribute("data-pod");
+      Array.prototype.forEach.call(select.options, function (opt) {
+        if (opt.text.indexOf(wanted) === 0) select.value = opt.value || opt.text;
+      });
+      track("select_item", { item_name: wanted });
+    });
+  });
 
   /* ----- Liens "Gérer les cookies" ----- */
   document.querySelectorAll("[data-open-consent]").forEach(function (a) {

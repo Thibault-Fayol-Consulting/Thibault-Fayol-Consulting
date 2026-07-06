@@ -1,7 +1,9 @@
-# Barbecue Zone — Site vitrine multi-pages
+# Barbecue Zone — Landing lead-gen « Pods » (cuisine extérieure premium)
 
-Site vitrine pour **Barbecue Zone** : page d'accueil conversion-first (pensée landing Google Ads),
-6 pages catégories SEO, pages légales, CMP RGPD maison avec Consent Mode v2 et tracking prêt à brancher.
+Maquette de site pour **Barbecue Zone** (barbecuezone.fr) : cuisines d'été extérieures
+fermées en inox 304, sur mesure, posées en 1 journée — **12 490 € à 17 900 € TTC**.
+Site orienté **génération de leads** (étude gratuite), avec CMP RGPD maison,
+**Google Consent Mode v2** et événements de conversion prêts pour Google Ads.
 100 % statique, **zéro build, zéro dépendance**.
 
 ## Aperçu
@@ -16,55 +18,46 @@ python3 -m http.server 8000
 
 ```
 barbecue-zone-website/
-├── index.html                 # Accueil / landing (hero, univers, best-sellers, guide, avis, contact)
-├── barbecue-charbon.html      # Pages catégories : produits + conseils + FAQ
-├── barbecue-gaz.html          #   + fil d'Ariane et BreadcrumbList JSON-LD
-├── barbecue-electrique.html
-├── planchas.html
-├── fumoirs.html
-├── accessoires.html
+├── index.html                 # Landing : hero, 3 Pods, concept/comparatif, processus,
+│                              #   FAQ, guide (lead magnet), formulaire d'étude qualifiant
+├── pod-compact.html           # Fiches produit (12 490 €) — JSON-LD Product + Breadcrumb
+├── pod-riviera.html           #   (14 900 €, « le plus choisi »)
+├── pod-signature.html         #   (17 900 €)
 ├── mentions-legales.html      # Pages légales (gabarits à compléter, noindex)
-├── cgv.html
+├── cgv.html                   #   CGV adaptées au sur-mesure (rétractation L221-28 3°)
 ├── confidentialite.html
 ├── 404.html
 ├── robots.txt · sitemap.xml
 ├── _headers · .htaccess       # En-têtes de sécurité (Netlify/CF Pages · Apache)
-├── AUDIT.md                   # Audit complet + plan d'action (FR)
+├── AUDIT.md                   # Audit + plan d'action (rédigé sur la v1, méthodo réutilisable)
 └── assets/
     ├── css/styles.css
     ├── js/config.js           # ← IDs GTM/GA4/Ads, endpoints formulaires, téléphone
-    ├── js/consent.js          # CMP maison + Google Consent Mode v2 (défaut : tout refusé)
-    ├── js/main.js             # UI + formulaires + événements dataLayer
+    ├── js/consent.js          # CMP maison + Consent Mode v2 (défaut : tout refusé)
+    ├── js/main.js             # UI + formulaire d'étude + événements dataLayer
     ├── fonts/README.md        # Polices auto-hébergées (RGPD) — mode d'emploi
     └── og-image.jpg           # Image de partage 1200×630
 ```
 
-## Mise en service (checklist)
-
-1. **`assets/js/config.js`** : renseigner `GTM_ID` (ou `GA4_ID`/`ADS_ID`), `FORM_ENDPOINT`,
-   `NEWSLETTER_ENDPOINT`, téléphone et email réels.
-2. **Coordonnées** : remplacer `04 00 00 00 00` / `contact@barbecuezone.fr` dans les pages HTML.
-3. **Pages légales** : compléter les champs `[À COMPLÉTER]` et faire valider juridiquement.
-4. **Polices** : déposer les `.woff2` dans `assets/fonts/` et décommenter le bloc `@font-face`
-   (voir `assets/fonts/README.md`).
-5. **Catalogue** : remplacer les produits de démonstration par le vrai catalogue.
-6. **Hébergement** : servir en HTTPS avec les en-têtes de `_headers` ou `.htaccess`.
-
 ## Mesure & conversions (Google Ads ready)
 
-- **Consent Mode v2** : consentement par défaut refusé, bandeau CMP sans dépendance,
-  choix mémorisé 6 mois, ré-ouvrable via « Gérer les cookies ».
-- Les tags (GTM ou gtag.js) ne se chargent **qu'après consentement** (mode basique, conforme CNIL).
-- Événements poussés dans le `dataLayer` : `generate_lead` (formulaire), `phone_call`
-  (click-to-call), `add_to_cart`, `newsletter_signup` → à mapper en conversions dans GTM/Google Ads.
+- **Consent Mode v2**, tags chargés uniquement après consentement (mode basique CNIL).
+- Événements `dataLayer` : **`generate_lead`** (formulaire d'étude, avec modèle envisagé et
+  département), **`phone_call`** (click-to-call), **`select_item`** (choix d'un Pod),
+  **`newsletter_signup`** (guide) → à mapper en conversions dans GTM/Google Ads.
+- Formulaire d'étude **qualifiant** : téléphone requis, code postal, modèle envisagé
+  (pré-rempli au clic sur une carte Pod), honeypot anti-spam, consentement RGPD.
 
-## Formulaires
+## Mise en service (checklist)
 
-Sans `FORM_ENDPOINT` configuré, les formulaires fonctionnent en **mode démonstration**
-(aucune donnée envoyée). Avec un endpoint (Formspree, Brevo, API maison…), l'envoi se fait
-en `POST FormData` avec anti-spam honeypot et case de consentement RGPD obligatoire.
+1. `assets/js/config.js` : IDs GTM/GA4/Ads, `FORM_ENDPOINT`, coordonnées réelles.
+2. Remplacer `04 00 00 00 00` / `contact@barbecuezone.fr` dans les pages.
+3. Compléter et faire valider les pages légales (`[À COMPLÉTER]`).
+4. Déposer les `.woff2` dans `assets/fonts/` et décommenter les `@font-face`.
+5. Remplacer les illustrations CSS par de vraies photos produit (WebP + lazy-load).
+6. Servir en HTTPS avec les en-têtes de `_headers` ou `.htaccess`.
 
 ## Accessibilité & performance
 
 Skip-link, ARIA, navigation clavier avec focus visible, `prefers-reduced-motion`,
-contrastes AA, aucune image externe (illustrations CSS/emoji), ~50 Ko de code au total.
+contrastes AA, aucune ressource externe, ~55 Ko de code au total.

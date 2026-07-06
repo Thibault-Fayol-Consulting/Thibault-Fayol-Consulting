@@ -1,5 +1,13 @@
 # Audit complet & plan d'action — Site Barbecue Zone
 
+> **Addendum (06/07/2026)** : cet audit a été rédigé sur la première version de la maquette
+> (boutique barbecue générique). Le site a depuis été **repositionné sur l'activité réelle
+> de Barbecue Zone** (Pods de cuisine extérieure haut de gamme, modèle lead-gen) et les
+> chantiers P0/P1 ont été **implémentés** : CMP + Consent Mode v2, pages légales, formulaires
+> branchables + RGPD, polices auto-hébergées, JSON-LD assaini, og-image, sitemap propre,
+> événements de conversion, barre CTA mobile, en-têtes de sécurité. La méthodologie et les
+> grilles de priorisation restent la référence pour la suite (phase 3+).
+
 > Document de travail — audit technique, SEO, conversion, conformité et sécurité du site vitrine `barbecue-zone-website/`, assorti d'un plan d'action priorisé pour passer de la maquette actuelle à un site de production.
 >
 > **Date :** juillet 2026 · **Périmètre :** page vitrine one-page livrée sur la branche `claude/barbecue-zone-website-egxpd2` · **Version auditée :** commit initial du site.
